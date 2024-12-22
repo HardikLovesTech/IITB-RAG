@@ -68,9 +68,9 @@ The project consists of three main components:
    To get started with the project, first clone the repository to your local machine:
    ```bash
    git clone git@github.com:HardikLovesTech/IITB-RAG.git
-   cd your-repository
+   cd your-repository '''
 
-# Connect with Me
+## Connect with Me
 
 Feel free to check out my LinkedIn profile and let's connect!
 
