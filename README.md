@@ -64,13 +64,12 @@ The project consists of three main components:
 
 ## Installation and Setup
 
-### 1. **Clone the Repository**
+### **Clone the Repository**
    To get started with the project, first clone the repository to your local machine:
    ```bash
     git clone https://github.com/username/repository.git
     cd repository
- 
-
+    
 ## Connect with Me
 
 Feel free to check out my LinkedIn profile and let's connect!
