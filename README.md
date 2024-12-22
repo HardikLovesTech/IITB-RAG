@@ -62,6 +62,13 @@ The project consists of three main components:
 - **Vector Database**: A custom vector database is created to store the embeddings of document chunks. The vector database supports efficient querying and retrieval based on semantic similarity.
 - **Similarity Search**: Employed to match user queries with the most relevant document chunks based on vector similarity.
 
+## Connect with Me
+
+Feel free to check out my LinkedIn profile and let's connect!
+🔗 **LinkedIn:** [Hardik Runwal](https://www.linkedin.com/in/hardikrunwal/)
+Let's stay in touch and collaborate on exciting opportunities!
+
+
 ## Installation and Setup
 
 ### **Clone the Repository**
@@ -70,11 +77,5 @@ The project consists of three main components:
     git clone https://github.com/username/repository.git
     cd repository
     
-## Connect with Me
 
-Feel free to check out my LinkedIn profile and let's connect!
-
-🔗 **LinkedIn:** [Hardik Runwal](https://www.linkedin.com/in/hardikrunwal/)
-
-Let's stay in touch and collaborate on exciting opportunities!
 
