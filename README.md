@@ -64,8 +64,8 @@ The project consists of three main components:
 
 ## Connect with Me
 
-Feel free to check out my LinkedIn profile and let's connect!
-🔗 **LinkedIn:** [Hardik Runwal](https://www.linkedin.com/in/hardikrunwal/)
+- Feel free to check out my LinkedIn profile and let's connect!
+- 🔗 **LinkedIn:** [Hardik Runwal](https://www.linkedin.com/in/hardikrunwal/)
 Let's stay in touch and collaborate on exciting opportunities!
 
 
@@ -74,7 +74,7 @@ Let's stay in touch and collaborate on exciting opportunities!
 ### **Clone the Repository**
    To get started with the project, first clone the repository to your local machine:
    ```bash
-    git clone https://github.com/username/repository.git
+    git clone git@github.com:HardikLovesTech/IITB-RAG.git
     cd repository
     
 
