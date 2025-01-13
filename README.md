@@ -235,9 +235,11 @@ if __name__ == "__main__":
 
 ### **Clone the Repository**
    To get started with the project, first clone the repository to your local machine:
-   ```bash
+```bash
     git clone git@github.com:HardikLovesTech/IITB-RAG.git
     cd repository
+```
+    
 
 ## Contributions
 Feel free to fork this repository and suggest improvements or additional features via pull requests.
