@@ -18,20 +18,18 @@ The project consists of three main components:
    - This script is responsible for loading a document into the system.
    - It supports different file types such as PDFs, Word documents, and plain text files.
    - The document is pre-processed (if necessary) to extract its raw content.
-   - ![Document Upload](Images/Document_Loading.py.png)
+  
 
 ### 2. **Document Chunking (`document_chunker.py`)**
    - After the document is loaded, this script splits the content into smaller, logical chunks for better analysis and indexing.
    - This chunking process is essential for large documents, as it allows the system to handle smaller pieces of text, improving both processing and retrieval times.
    - Each chunk represents a part of the document (e.g., a paragraph, section, or page).
-   -    ![Document Chunking](Images/Chunking.py.png)
 
 ### 3. **Vector Embedding & Querying (`vector_embedding.py`)**
    - This script performs the vectorization of the document chunks using AI-powered embeddings.
    - The vectorization process converts the text data into numerical vectors, which represent the semantic meaning of the document.
    - A vector database is created to store these embeddings, and a similarity search mechanism is applied to answer user queries based on the vectorized content.
    - The AI embeddings used in this script are powered by Hugging Face models and LangChain, which enable efficient and intelligent query answering.
-   -    ![Vector Embedding](Images/Query_Solving.py.png)
 
 ## How It Works
 
