@@ -62,12 +62,176 @@ The project consists of three main components:
 - **Vector Database**: A custom vector database is created to store the embeddings of document chunks. The vector database supports efficient querying and retrieval based on semantic similarity.
 - **Similarity Search**: Employed to match user queries with the most relevant document chunks based on vector similarity.
 
-## Connect with Me
 
-- Feel free to check out my LinkedIn profile and let's connect!
-- 🔗 **LinkedIn:** [Hardik Runwal](https://www.linkedin.com/in/hardikrunwal/)
-Let's stay in touch and collaborate on exciting opportunities!
 
+    
+## Installation
+
+### Prerequisites
+Ensure you have Python 3.8+ installed on your system.
+
+### Required Libraries
+Install the necessary Python libraries:
+
+```bash
+pip install langchain[all] faiss-cpu huggingface-hub
+```
+
+---
+
+## Usage
+
+### 1. Directory Setup
+Place your `.txt` and `.pdf` files in a directory. Update the `directory_path` variable in the code to point to this directory.
+
+### 2. Running the Code
+Run the script with the following command:
+
+```bash
+python main.py
+```
+
+You will:
+- Load and index documents (or load an existing FAISS index if available).
+- Be prompted to enter a query and the number of results (`k`) to retrieve.
+- View the retrieved results in the terminal.
+
+---
+
+## Code
+
+```python
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.document_loaders import TextLoader, PyPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.schema import Document
+from typing import List
+import os
+import textwrap  # For wrapping long lines
+
+
+def load_and_split_documents(directory: str) -> List[Document]:
+    """
+    Load and split .txt and .pdf documents from a directory.
+    """
+    documents = []
+
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        print(f"\ud83d\udd04 Loading file: {filename}")
+
+        try:
+            if filename.endswith(".txt"):
+                loader = TextLoader(file_path)
+                loaded_docs = loader.load()
+                documents.extend(loaded_docs)
+
+            if filename.endswith(".pdf"):
+                loader = PyPDFLoader(file_path)
+                loaded_docs = loader.load()
+                documents.extend(loaded_docs)
+
+        except Exception as e:
+            print(f"❌ Error loading {filename}: {e}")
+
+    # Split documents into smaller chunks
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,  # Number of characters per chunk
+        chunk_overlap=200  # Overlap between chunks
+    )
+    split_documents = text_splitter.split_documents(documents)
+
+    print(f"✅ Loaded and split {len(split_documents)} document chunks.")
+    return split_documents
+
+
+def initialize_faiss(documents: List[Document], db_path: str) -> FAISS:
+    """
+    Initializes a FAISS vector database and stores documents.
+    """
+    try:
+        print("\ud83d\udd04 Initializing Hugging Face embeddings...")
+        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
+        print("\ud83d\udd04 Creating FAISS vector store...")
+        vectorstore = FAISS.from_documents(documents, embeddings)
+
+        print("💾 Saving FAISS index...")
+        vectorstore.save_local(db_path)
+
+        print(f"✅ Indexed {len(documents)} document chunks in FAISS.")
+        return vectorstore
+    except Exception as e:
+        print(f"❌ Error initializing FAISS: {e}")
+        raise
+
+
+def query_database(query: str, vectorstore: FAISS, k: int) -> List[Document]:
+    """
+    Queries the FAISS database for the top-k similar documents.
+    """
+    print(f"\ud83d\udd0d Querying database for: {query}")
+    retrieved_documents = vectorstore.similarity_search_with_score(query, k=k)
+    print("✅ Query completed.")
+
+    for i, (doc, score) in enumerate(retrieved_documents):
+        print(f"\ud83d\udd04 Retrieved Document {i+1} (Score: {score:.4f}): {doc.page_content[:100]}...")
+
+    results = [doc.page_content for doc, _ in retrieved_documents]
+    return results
+
+
+if __name__ == "__main__":
+    directory_path = "./your_documents_directory"  # Update with your directory path
+
+    if not os.path.exists(directory_path):
+        print(f"❌ The directory {directory_path} does not exist. Exiting...")
+        exit()
+
+    print("\ud83d\udd04 Loading and splitting documents...")
+    documents = load_and_split_documents(directory_path)
+
+    if not documents:
+        print("❌ No documents found in the directory. Exiting...")
+        exit()
+
+    db_path = "./vector_db"
+
+    if os.path.exists(db_path):
+        print("\ud83d\udd04 Loading existing FAISS index...")
+        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        vectorstore = FAISS.load_local(db_path, embeddings)
+    else:
+        print("\ud83d\udd04 Creating new FAISS index...")
+        vectorstore = initialize_faiss(documents, db_path)
+
+    query_text = input("❓ Enter your query: ")
+    try:
+        top_k = int(input("🔢 Enter the number of results to retrieve: "))
+        if top_k <= 0:
+            print("❌ Number of results must be greater than 0. Exiting...")
+            exit()
+    except ValueError:
+        print("❌ Invalid input. Exiting...")
+        exit()
+
+    results = query_database(query_text, vectorstore, top_k)
+
+    print("\n📝 Query Results:")
+    for i, result in enumerate(results):
+        print(f"🔹 Result {i+1}:")
+        print(textwrap.fill(result, width=80))
+        print()
+```
+
+---
+
+## Example Queries
+- **Query**: "What is artificial intelligence?"
+- **Query**: "Explain reinforcement learning."
+
+---
 
 ## Installation and Setup
 
@@ -76,6 +240,17 @@ Let's stay in touch and collaborate on exciting opportunities!
    ```bash
     git clone git@github.com:HardikLovesTech/IITB-RAG.git
     cd repository
-    
 
+## Contributions
+Feel free to fork this repository and suggest improvements or additional features via pull requests.
 
+---
+
+## License
+This project is licensed under the MIT License.
+
+## Connect with Me
+
+- Feel free to check out my LinkedIn profile and let's connect!
+- 🔗 **LinkedIn:** [Hardik Runwal](https://www.linkedin.com/in/hardikrunwal/)
+Let's stay in touch and collaborate on exciting opportunities!
